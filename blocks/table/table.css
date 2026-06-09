@@ -1,0 +1,225 @@
+/* Table block */
+.table {
+  --table-border-color: light-dark(var(--color-gray-200), rgb(245 242 237 / 12%));
+
+  width: 100%;
+  overflow-x: auto;
+  border-radius: 12px;
+}
+
+.table table {
+  width: 100%;
+  max-width: 100%;
+  border-collapse: collapse;
+  font-size: var(--body-font-size-xs);
+}
+
+@media (width >= 600px) {
+  .table table {
+    font-size: var(--body-font-size-s);
+  }
+}
+
+@media (width >= 900px) {
+  .table table {
+    font-size: var(--body-font-size-m);
+  }
+}
+
+.table table th {
+  font-weight: 700;
+}
+
+.table table th,
+.table table td {
+  padding: 0.75em 0.85em;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.table table thead tr {
+  border-top: 2px solid var(--table-border-color);
+  border-bottom: 2px solid var(--table-border-color);
+}
+
+.table table thead th {
+  font-family: var(--body-font-family);
+  font-weight: 700;
+  font-size: 0.85em;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: light-dark(var(--color-ink), var(--color-parchment));
+  text-align: center;
+}
+
+.table table tbody tr {
+  border-bottom: 1px solid var(--table-border-color);
+  transition: background-color 0.2s;
+}
+
+.table table tbody tr:hover {
+  background-color: light-dark(rgb(161 79 43 / 4%), rgb(197 160 89 / 5%));
+}
+
+.table table th p,
+.table table td p {
+  margin: 0;
+}
+
+.table table td p + p {
+  margin-top: 0.25em;
+}
+
+/* Reset button styling inside table cells */
+.table table .button-container {
+  display: block;
+  margin: 0;
+}
+
+.table table a.button:any-link {
+  all: unset;
+  color: var(--link-color);
+  text-decoration: none;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: inherit;
+  padding: 0;
+  margin: 0;
+  white-space: normal;
+  display: inline;
+  border: none;
+  background: none;
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+.table table a.button:any-link::after {
+  display: none;
+}
+
+.table table a.button:any-link:hover {
+  text-decoration: underline;
+  color: var(--link-color);
+  background: none;
+  border: none;
+}
+
+/* Table images - centered and constrained */
+.table table img {
+  max-width: 150px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+@media (width >= 900px) {
+  .table table img {
+    max-width: 180px;
+  }
+}
+
+.table table thead img {
+  max-width: 180px;
+}
+
+/* Center non-first columns for spec values */
+.table table td:not(:first-child),
+.table table th:not(:first-child) {
+  text-align: center;
+}
+
+/* First column styling */
+.table table td:first-child {
+  font-weight: 400;
+  color: light-dark(var(--color-gray-700), var(--color-gray-300));
+}
+
+/* no header variant */
+.table.no-header table tbody tr {
+  border-top: 1px solid var(--table-border-color);
+}
+
+/* striped variant */
+.table.striped tbody tr:nth-child(odd) {
+  background-color: var(--light-color);
+}
+
+.table.striped tbody tr:nth-child(odd):hover {
+  background-color: light-dark(rgb(161 79 43 / 6%), rgb(197 160 89 / 8%));
+}
+
+/* bordered variant */
+.table.bordered table th,
+.table.bordered table td {
+  border: 1px solid var(--table-border-color);
+}
+
+/* stylelint-disable no-descending-specificity */
+
+/* Section intro text above the table */
+.table-container > .default-content-wrapper {
+  max-width: var(--grid-container-width);
+}
+
+.table-container > .default-content-wrapper h2 {
+  margin-top: 0;
+}
+
+
+.table-container > .default-content-wrapper p {
+  color: light-dark(var(--color-gray-600), var(--color-gray-300));
+  line-height: 1.6;
+  margin: 0.5em 0;
+}
+
+@media (width < 900px) {
+  .table-container > .default-content-wrapper {
+    max-width: 100%;
+  }
+}
+
+/* Section intro links - render as tertiary text links */
+.table-container > .default-content-wrapper .button-container {
+  margin: var(--space-s) 0;
+}
+
+.table-container > .default-content-wrapper a.button:any-link {
+  all: unset;
+  color: var(--link-color);
+  text-decoration: none;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: inherit;
+  display: inline;
+  white-space: normal;
+}
+
+.table-container > .default-content-wrapper a.button:any-link::after {
+  content: '\203A';
+  display: inline-block;
+  margin-inline-start: 0.3em;
+  transition: transform 0.2s;
+}
+
+.table-container > .default-content-wrapper a.button:any-link:hover {
+  text-decoration: underline;
+  background: none;
+  border: none;
+}
+
+.table-container > .default-content-wrapper a.button:any-link:hover::after {
+  transform: translateX(3px);
+}
+
+/* Footnotes section below the table */
+.table-container > .default-content-wrapper:last-of-type:not(:first-of-type) {
+  background-color: light-dark(#f5f2ed, var(--color-card-dark));
+  border-radius: 8px;
+  padding: var(--space-l) var(--space-xl);
+  margin-top: var(--space-l);
+  font-size: var(--body-font-size-s);
+  color: light-dark(var(--color-gray-700), var(--color-gray-300));
+  line-height: 1.7;
+}
+
+/* stylelint-enable no-descending-specificity */

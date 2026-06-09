@@ -1,0 +1,84 @@
+.columns > div {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-l);
+}
+
+.columns img {
+  width: 100%;
+  border-radius: 12px;
+}
+
+.columns > div > div {
+  order: 1;
+}
+
+.columns > div > .columns-img-col {
+  order: 0;
+}
+
+.columns > div > .columns-img-col img {
+  display: block;
+}
+
+.columns > div > div :is(h2, h3) {
+  letter-spacing: -0.01em;
+}
+
+.columns > div > div p {
+  line-height: 1.65;
+  color: light-dark(var(--color-gray-700), var(--color-gray-300));
+}
+
+.columns > div > div a.button:any-link {
+  background: none;
+  border: none;
+  color: light-dark(var(--color-ink), var(--color-parchment));
+  padding: 0;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  box-shadow: none;
+  font-size: inherit;
+}
+
+.columns > div > div a.button:any-link:hover {
+  background: none;
+  color: light-dark(var(--color-gray-600), var(--color-gray-200));
+}
+
+/* Hero banner: text first on mobile, vertically centered */
+.hero-banner .columns > div {
+  gap: var(--space-xl);
+}
+
+.hero-banner .columns > div > div {
+  order: unset;
+}
+
+.hero-banner .columns > div > div:first-child {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+@media (width >= 900px) {
+  .columns > div {
+    align-items: center;
+    flex-direction: unset;
+    gap: var(--space-2xl, 48px);
+  }
+
+  .columns > div > div {
+    flex: 1;
+    order: unset;
+  }
+
+  .hero-banner .columns > div {
+    gap: var(--space-2xl, 64px);
+  }
+
+  .hero-banner .columns > div > div:last-child {
+    flex: 0 0 45%;
+  }
+}
