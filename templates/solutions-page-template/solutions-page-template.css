@@ -1,0 +1,4 @@
+/* Solutions page template — page-level styling hooks.
+   Layout/styling is driven by global styles and block CSS; this file
+   exists so the template module resolves and is available for any
+   solutions-page-specific overrides. */
