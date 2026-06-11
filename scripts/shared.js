@@ -1,30 +1,4 @@
-import { getMetadata, createOptimizedPicture } from './aem.js';
-
-/**
- * Rewrite EDS media-bus images (absolute URLs with a `/media_` pathname) so they
- * are served as responsive WebP through the delivery pipeline. Imported content
- * references these assets cross-origin, so the boilerplate leaves them
- * unoptimized — this restores next-gen formats, responsive widths, and
- * compression for better LCP and Lighthouse scores.
- * @param {Element} main
- */
-export function optimizeMediaBusImages(main) {
-  main.querySelectorAll('picture > img[src*="/media_"]').forEach((img) => {
-    const picture = img.closest('picture');
-    let url;
-    try {
-      url = new URL(img.src, window.location.href);
-    } catch (e) {
-      return;
-    }
-    if (!url.pathname.startsWith('/media_')) return;
-    const eager = img.getAttribute('loading') === 'eager';
-    // createOptimizedPicture keeps the absolute URL's own origin (the media bus)
-    // and appends ?format=webply&optimize params the host already supports.
-    const optimized = createOptimizedPicture(url.href, img.alt, eager);
-    picture.replaceWith(optimized);
-  });
-}
+import { getMetadata } from './aem.js';
 
 /**
  * Page metadata `gated=true` — same signal as CDN worker HTML gating; author preview uses this too.

@@ -463,6 +463,17 @@ a:hover {
   text-decoration-color: var(--link-hover-color);
 }
 
+/* Utility: gradient-purple underline on a text link */
+a.gradient-underline:any-link {
+  text-decoration: none;
+  background-image: var(--ilmn-gradient-cta);
+  background-size: 100% 2px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  padding-bottom: 2px;
+  color: inherit;
+}
+
 /* buttons (AEM default content: links in standalone paragraphs) */
 p.button-container {
   margin: var(--space-m) 0;
@@ -741,7 +752,9 @@ main > .section.contact-cta .button-container {
   margin: var(--space-m) var(--space-xs);
 }
 
+/* Default contact button: transparent fill + gradient outline (gradient text on inner strong) */
 main > .section.contact-cta a.button:any-link {
+  border: 2px solid transparent;
   border-radius: 100px;
   padding: 10px 26px;
   font-size: 1.1rem;
@@ -749,11 +762,34 @@ main > .section.contact-cta a.button:any-link {
   font-family: var(--ilmn-font-family, inter, sans-serif);
   text-transform: none;
   letter-spacing: 0;
+  background:
+    linear-gradient(light-dark(#f4f2f0, var(--color-obsidian)), light-dark(#f4f2f0, var(--color-obsidian))) padding-box,
+    var(--ilmn-gradient-cta) border-box;
+  color: transparent;
 }
 
-main > .section.contact-cta a.button.primary:any-link {
-  background: linear-gradient(8.62deg, rgb(34 93 230) 10%, rgb(166 100 253));
-  border-color: transparent;
+main > .section.contact-cta a.button:any-link::after {
+  display: none;
+}
+
+main > .section.contact-cta a.button:any-link strong {
+  background: var(--ilmn-gradient-cta);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: inherit;
+}
+
+/* Second (right) button: solid gradient fill, white text */
+main > .section.contact-cta .button-container + .button-container a.button:any-link {
+  border: 2px solid transparent;
+  background: var(--ilmn-gradient-cta);
+  color: #fff;
+  -webkit-text-fill-color: #fff;
+}
+
+main > .section.contact-cta .button-container + .button-container a.button:any-link strong {
+  background: none;
+  -webkit-text-fill-color: #fff;
   color: #fff;
 }
 
@@ -798,20 +834,6 @@ main > .section.alert > .default-content-wrapper a {
 
 main > .section.alert > .default-content-wrapper a:hover { /* stylelint-disable-line no-descending-specificity */
   text-decoration: underline;
-}
-
-main > .section.contact-cta a.button.primary:any-link:hover {
-  background: linear-gradient(8.62deg, rgb(28 78 194) 10%, rgb(140 84 214));
-}
-
-main > .section.contact-cta a.button:not(.primary):any-link {
-  background: transparent;
-  border: 2px solid #5b4fc4;
-  color: #5b4fc4;
-}
-
-main > .section.contact-cta a.button:not(.primary):any-link:hover {
-  background: rgb(91 79 196 / 8%);
 }
 
 @media (width >= 900px) {
@@ -912,4 +934,26 @@ main > .section > .default-content-wrapper > p:not(.button-container) {
   font-weight: var(--ilmn-font-weight-regular, 400);
   line-height: 1.5;
   color: var(--ilmn-color-body, #4c4a48);
+}
+
+/* section-metadata style=specification: rounded greyish-beige spec/footnote box */
+main > .section.specification > .default-content-wrapper {
+  max-width: var(--grid-container-width);
+  margin-inline: auto;
+  padding: var(--ilmn-spacing-lg, 26px) var(--ilmn-spacing-xl, 42px);
+  border-radius: var(--ilmn-radius-md, 16px);
+  background-color: #f4f1ee;
+  background-image: var(--ilmn-gradient-bg-understated);
+}
+
+main > .section.specification > .default-content-wrapper > p {
+  margin: 0 0 var(--space-xs);
+  font-family: var(--ilmn-font-family, inter, sans-serif);
+  font-size: var(--body-font-size-s);
+  line-height: 1.6;
+  color: light-dark(#6f6d6b, var(--color-gray-400));
+}
+
+main > .section.specification > .default-content-wrapper > p:last-child {
+  margin-bottom: 0;
 }
