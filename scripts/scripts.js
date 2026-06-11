@@ -17,7 +17,7 @@ import {
   toCamelCase,
   toClassName,
 } from './aem.js';
-import { getAllMetadata } from './shared.js';
+import { getAllMetadata, optimizeMediaBusImages } from './shared.js';
 import { initPageSchemas } from './schema.js';
 import dynamicBlocks from '../blocks/dynamic/index.js';
 
@@ -166,6 +166,7 @@ export function decorateMain(main) {
   decorateButtons(main);
   decorateIcons(main);
   inlineColorIcons(main);
+  optimizeMediaBusImages(main);
   buildAutoBlocks(main);
   decorateSections(main);
   decorateBlocks(main);

@@ -1,69 +1,70 @@
 /* Table block */
 .table {
-  --table-border-color: light-dark(var(--color-gray-200), rgb(245 242 237 / 12%));
+  --table-border-color: light-dark(#a5a5a3, rgb(245 242 237 / 12%));
 
   width: 100%;
   overflow-x: auto;
-  border-radius: 12px;
 }
 
 .table table {
   width: 100%;
   max-width: 100%;
   border-collapse: collapse;
-  font-size: var(--body-font-size-xs);
-}
-
-@media (width >= 600px) {
-  .table table {
-    font-size: var(--body-font-size-s);
-  }
+  font-family: var(--ilmn-font-family, inter, sans-serif);
+  font-size: 0.875rem;
 }
 
 @media (width >= 900px) {
   .table table {
-    font-size: var(--body-font-size-m);
+    font-size: 0.985rem;
   }
 }
 
 .table table th {
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .table table th,
 .table table td {
-  padding: 0.75em 0.85em;
+  padding: 18px 16px;
   text-align: left;
   vertical-align: middle;
+  color: var(--ilmn-color-body, #4c4a48);
 }
 
-.table table thead tr {
-  border-top: 2px solid var(--table-border-color);
-  border-bottom: 2px solid var(--table-border-color);
+@media (width >= 900px) {
+  .table table th,
+  .table table td {
+    padding: 26px 16px;
+  }
 }
 
 .table table thead th {
-  font-family: var(--body-font-family);
-  font-weight: 700;
-  font-size: 0.85em;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: light-dark(var(--color-ink), var(--color-parchment));
+  font-family: var(--ilmn-font-family, inter, sans-serif);
+  font-weight: 400;
+  font-size: inherit;
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--ilmn-color-body, #4c4a48);
   text-align: center;
+  vertical-align: bottom;
 }
 
 .table table tbody tr {
   border-bottom: 1px solid var(--table-border-color);
-  transition: background-color 0.2s;
-}
-
-.table table tbody tr:hover {
-  background-color: light-dark(rgb(161 79 43 / 4%), rgb(197 160 89 / 5%));
 }
 
 .table table th p,
 .table table td p {
   margin: 0;
+}
+
+/* Category/section rows (e.g. "Key NGS applications and methods") */
+.table table td strong,
+.table table th strong {
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: var(--ilmn-color-body, #4c4a48);
 }
 
 .table table td p + p {
@@ -110,6 +111,8 @@
   height: auto;
   display: block;
   margin: 0 auto;
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
 }
 
 @media (width >= 900px) {
@@ -128,10 +131,31 @@
   text-align: center;
 }
 
-/* First column styling */
-.table table td:first-child {
-  font-weight: 400;
-  color: light-dark(var(--color-gray-700), var(--color-gray-300));
+/* First column styling - spec labels are semibold */
+.table table td:first-child,
+.table table th[scope="row"]:first-child {
+  font-weight: 600;
+  color: var(--ilmn-color-body, #4c4a48);
+}
+
+/* Product-name header links (weight 600, dark, no underline) */
+.table table thead a:any-link,
+.table table tbody tr:first-child a:any-link {
+  font-weight: 600;
+  color: #111;
+  text-decoration: none;
+}
+
+/* Checkmark cells: orange circular checkmark icon, centered */
+.table table td.table-cell-check {
+  text-align: center;
+}
+
+.table table .table-checkmark {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  vertical-align: middle;
 }
 
 /* no header variant */
@@ -211,15 +235,20 @@
   transform: translateX(3px);
 }
 
-/* Footnotes section below the table */
+/* Footnotes section below the table - small muted text, no box */
 .table-container > .default-content-wrapper:last-of-type:not(:first-of-type) {
-  background-color: light-dark(#f5f2ed, var(--color-card-dark));
-  border-radius: 8px;
-  padding: var(--space-l) var(--space-xl);
-  margin-top: var(--space-l);
-  font-size: var(--body-font-size-s);
-  color: light-dark(var(--color-gray-700), var(--color-gray-300));
-  line-height: 1.7;
+  margin-top: var(--space-m);
+  font-family: var(--ilmn-font-family, inter, sans-serif);
+  font-size: 0.8rem;
+  color: light-dark(#6f6d6b, var(--color-gray-400));
+  line-height: 1.6;
+}
+
+.table-container > .default-content-wrapper:last-of-type:not(:first-of-type) p {
+  margin: 0 0 4px;
+  color: inherit;
+  font-size: inherit;
+  line-height: inherit;
 }
 
 /* stylelint-enable no-descending-specificity */

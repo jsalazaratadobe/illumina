@@ -19,13 +19,37 @@ const THEME_KEY = 'demo-theme';
 
 function getNavPath() {
   const meta = getMetadata('nav');
-  return (meta ? new URL(meta, location).pathname : null) || '/nav';
+  return (meta ? new URL(meta, location).pathname : null) || '/content/nav';
 }
 
 function collapseAll(nav) {
   nav.querySelectorAll('.nav-drop').forEach((li) => li.setAttribute('aria-expanded', 'false'));
+  nav.querySelectorAll('.nav-mega-revealed').forEach((el) => el.classList.remove('nav-mega-revealed'));
   nav.querySelector('.nav-language-menu')?.setAttribute('hidden', '');
   nav.querySelector('.nav-language-toggle')?.setAttribute('aria-expanded', 'false');
+}
+
+function isFragmentRef(el) {
+  const a = el.querySelector(':scope > a');
+  return a && a.getAttribute('href')?.includes('/fragments/');
+}
+
+function getFragmentPath(el) {
+  const a = el.querySelector(':scope > a');
+  return a?.getAttribute('href') || '';
+}
+
+async function loadNavFragment(path) {
+  try {
+    const resp = await fetch(`${path}.plain.html`);
+    if (!resp.ok) return null;
+    const html = await resp.text();
+    const div = document.createElement('div');
+    div.innerHTML = html;
+    return div;
+  } catch (e) {
+    return null;
+  }
 }
 
 function decorateMega(li) {
@@ -40,58 +64,101 @@ function decorateMega(li) {
 
   li.classList.add('nav-drop-mega');
   const items = [...sub.children].filter((c) => c.tagName === 'LI');
-  const promo = items.find((c) => c.querySelector('picture, img'));
-  const rest = items.filter((c) => c !== promo);
 
-  let group = 0;
-  let row = 0;
-  rest.forEach((c) => {
+  const categories = [];
+  let currentCategory = null;
+
+  items.forEach((c) => {
+    const hasImg = c.querySelector('picture, img');
     const hasDirectLink = c.querySelector(':scope > a') || c.querySelector(':scope > p > a');
-    if (hasDirectLink) {
-      if (!group) group = 1;
-      c.classList.add('nav-mega-item');
-      c.style.setProperty('--mega-group', group);
-      row += 1;
-      c.style.setProperty('--mega-row', row);
-    } else {
-      group += 1;
-      row = 0;
-      c.classList.add('nav-mega-heading');
-      c.style.setProperty('--mega-group', group);
+    if (!hasDirectLink && !hasImg) {
+      currentCategory = { heading: c.textContent.trim(), items: [], fragmentPath: null };
+      categories.push(currentCategory);
+    } else if (currentCategory) {
+      if (isFragmentRef(c)) {
+        currentCategory.fragmentPath = getFragmentPath(c);
+      } else if (hasImg) {
+        currentCategory.fragmentPath = null;
+      } else {
+        currentCategory.items.push(c);
+      }
     }
   });
 
-  const cols = group || 1;
-  const totalCols = promo ? cols + 1 : cols;
-  if (promo) {
-    promo.classList.add('nav-mega-promo');
-    promo.style.setProperty('--mega-group', cols + 1);
-    sub.append(promo);
-  }
-  if (group) sub.classList.add('nav-mega-has-groups');
+  if (!categories.length) return;
 
-  /* wrap content in centered inner container (full-width panel, centered grid) */
+  sub.innerHTML = '';
+  sub.classList.add('nav-mega-panel');
+
   const inner = document.createElement('div');
   inner.className = 'nav-mega-inner';
-  inner.style.setProperty('--mega-columns', String(totalCols));
-  while (sub.firstChild) inner.appendChild(sub.firstChild);
+
+  const sidebar = document.createElement('ul');
+  sidebar.className = 'nav-mega-sidebar';
+
+  const content = document.createElement('div');
+  content.className = 'nav-mega-content';
+
+  const promoArea = document.createElement('div');
+  promoArea.className = 'nav-mega-promo';
+
+  const fragmentCache = {};
+
+  async function showPromo(fragmentPath) {
+    if (!fragmentPath) return;
+    if (fragmentCache[fragmentPath]) {
+      promoArea.innerHTML = '';
+      promoArea.appendChild(fragmentCache[fragmentPath].cloneNode(true));
+      return;
+    }
+    const frag = await loadNavFragment(fragmentPath);
+    if (frag) {
+      fragmentCache[fragmentPath] = frag;
+      promoArea.innerHTML = '';
+      promoArea.appendChild(frag.cloneNode(true));
+    }
+  }
+
+  categories.forEach((cat, i) => {
+    const btn = document.createElement('li');
+    btn.className = `nav-mega-cat${i === 0 ? ' active' : ''}`;
+    btn.textContent = cat.heading;
+    btn.dataset.panel = `panel-${i}`;
+    sidebar.appendChild(btn);
+
+    const panel = document.createElement('ul');
+    panel.className = `nav-mega-cat-panel${i === 0 ? ' active' : ''}`;
+    panel.dataset.panel = `panel-${i}`;
+    cat.items.forEach((item) => panel.appendChild(item));
+    content.appendChild(panel);
+
+    btn.addEventListener('mouseenter', () => {
+      sidebar.querySelectorAll('.nav-mega-cat').forEach((b) => b.classList.remove('active'));
+      content.querySelectorAll('.nav-mega-cat-panel').forEach((p) => p.classList.remove('active'));
+      btn.classList.add('active');
+      panel.classList.add('active');
+      const inner = content.closest('.nav-mega-inner');
+      if (inner && !inner.classList.contains('nav-mega-revealed')) {
+        requestAnimationFrame(() => inner.classList.add('nav-mega-revealed'));
+      }
+      showPromo(cat.fragmentPath);
+    });
+  });
+
+  if (categories[0].fragmentPath) showPromo(categories[0].fragmentPath);
+
+  inner.appendChild(sidebar);
+  inner.appendChild(content);
+  inner.appendChild(promoArea);
   sub.appendChild(inner);
 
-  // Position dropdown: full viewport width, arrow under trigger
   const sync = () => {
     if (!li.isConnected) return;
-    const trigger = li.querySelector(':scope > p');
-    const menu = li.querySelector(':scope > ul');
-    if (!trigger || !menu) return;
     const navBar = li.closest('.nav-wrapper');
     if (navBar) {
       const rect = navBar.getBoundingClientRect();
-      menu.style.setProperty('--mega-top', `${rect.bottom}px`);
+      sub.style.setProperty('--mega-top', `${rect.bottom}px`);
     }
-    const t = trigger.getBoundingClientRect();
-    const m = menu.getBoundingClientRect();
-    const x = t.left + t.width / 2 - m.left;
-    menu.style.setProperty('--mega-pointer-x', `${Math.round(x)}px`);
   };
   li.megaSync = sync;
   sync();

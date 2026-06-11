@@ -142,7 +142,7 @@
   --body-line-height: 1.6;
 
   /* nav / layout */
-  --nav-height: 64px;
+  --nav-height: 100px;
   --header-height: var(--nav-height);
 
   /* boilerplate compatibility – map to design tokens */
@@ -168,6 +168,47 @@
   /* easing presets for consistent motion */
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-out-smooth: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* Illumina design system tokens */
+  --ilmn-font-family: inter, arial, -apple-system, blinkmacsystemfont, "Segoe UI", sans-serif;
+  --ilmn-font-weight-light: 300;
+  --ilmn-font-weight-regular: 400;
+  --ilmn-font-weight-medium: 500;
+  --ilmn-font-weight-semibold: 600;
+  --ilmn-color-heading: #1f1d1a;
+  --ilmn-color-body: #4c4a48;
+  --ilmn-color-secondary: #797776;
+  --ilmn-color-label: #9f9f9d;
+  --ilmn-color-disabled: #cacac9;
+  --ilmn-color-cta-primary: #4e60ee;
+  --ilmn-color-cta-reverse: #6a7af0;
+  --ilmn-color-pumpkin: #ed8b00;
+  --ilmn-color-warm-pumpkin: #e56000;
+  --ilmn-gradient-cta: linear-gradient(8.62deg, #225de6 10%, #a664fd);
+  --ilmn-gradient-cta-hover: linear-gradient(8.62deg, #0045e6 10%, #8a33fd);
+  --ilmn-gradient-bg-understated: linear-gradient(360deg, #ededf5, #ede7e4 30%, #eee8e4 56%, #f4f1ee);
+  --ilmn-gradient-bg-primary: linear-gradient(180.13deg, #e56000, #ed8b00);
+  --ilmn-bg-page: #fff;
+  --ilmn-bg-warm-grey: #f4f2f0;
+  --ilmn-bg-light-warm-grey: #f9f8f7;
+  --ilmn-border-input: #a5a5a3;
+  --ilmn-border-card: #f4f2f0;
+  --ilmn-border-separator: #ebebeb;
+  --ilmn-shadow-card: 0 2px 6px rgb(0 0 0 / 25%);
+  --ilmn-shadow-dropdown: 0 10px 15px rgb(49 45 50 / 20%);
+  --ilmn-shadow-hover: 0 20px 40px rgb(49 45 50 / 20%);
+  --ilmn-radius-pill: 100px;
+  --ilmn-radius-lg: 26px;
+  --ilmn-radius-md: 16px;
+  --ilmn-radius-sm: 10px;
+  --ilmn-radius-xs: 6px;
+  --ilmn-spacing-unit: 1rem;
+  --ilmn-spacing-xs: calc(var(--ilmn-spacing-unit) * 0.375);
+  --ilmn-spacing-sm: calc(var(--ilmn-spacing-unit) * 0.625);
+  --ilmn-spacing-md: calc(var(--ilmn-spacing-unit) * 1);
+  --ilmn-spacing-lg: calc(var(--ilmn-spacing-unit) * 1.625);
+  --ilmn-spacing-xl: calc(var(--ilmn-spacing-unit) * 2.625);
+  --ilmn-spacing-2xl: calc(var(--ilmn-spacing-unit) * 4.25);
 }
 
 :root[data-theme='light'],
@@ -202,7 +243,7 @@
     --heading-font-size-s: 20px;
     --heading-font-size-xs: 18px;
     --content-padding-inline: var(--space-xl);
-    --section-block-space: var(--space-3xl);
+    --section-block-space: var(--ilmn-spacing-2xl, 68px);
   }
 }
 
@@ -284,6 +325,7 @@ body.appear {
 
 header {
   height: var(--nav-height);
+  background: #fff;
 }
 
 header .header,
@@ -326,8 +368,12 @@ main > .section:not(.hero-banner, .contact-cta) .columns h2 {
   display: flex;
   align-items: center;
   gap: 0.5em;
-  font-weight: 300;
-  font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+  font-family: var(--ilmn-font-family, inter, sans-serif);
+  font-weight: var(--ilmn-font-weight-light, 300);
+  font-size: clamp(2rem, 4vw, 3.3rem);
+  color: var(--ilmn-color-heading, #1f1d1a);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
 }
 
 main > .section:not(.hero-banner, .contact-cta) > .default-content-wrapper > h2::before,
@@ -339,6 +385,12 @@ main > .section:not(.hero-banner, .contact-cta) .columns h2::before {
   height: 1em;
   background-color: light-dark(#ed8b00, var(--color-gold));
   border-radius: 2px;
+}
+
+/* section-metadata style=compact-heading: smaller section headings (~38px) */
+main > .section.compact-heading > .default-content-wrapper > h2,
+main > .section.compact-heading .columns h2 {
+  font-size: clamp(1.75rem, 2.6vw, 2.4rem);
 }
 
 h3 { font-size: var(--heading-font-size-m); }
@@ -582,7 +634,7 @@ main img:not([width], [height]) {
 /* sections – boilerplate structure with design tokens */
 main > .section {
   margin: inherit;
-  padding-block: var(--space-xl);
+  padding-block: var(--section-block-space);
 }
 
 main > .section:first-child {
@@ -619,10 +671,13 @@ main > .section.hero-banner {
 }
 
 main > .section.hero-banner h1 {
-  font-size: clamp(2rem, 5vw, 3rem);
+  font-family: var(--ilmn-font-family, inter, sans-serif);
+  font-size: clamp(2.2rem, 5vw, 2.85rem);
   line-height: 1.2;
   margin: 0 0 var(--space-m);
-  font-weight: 700;
+  font-weight: var(--ilmn-font-weight-semibold, 600);
+  color: var(--ilmn-color-heading, #1f1d1a);
+  letter-spacing: -0.02em;
 }
 
 main > .section.hero-banner p {
@@ -648,51 +703,105 @@ main > .section.hero-banner img {
 
 @media (width >= 900px) {
   main > .section.hero-banner {
-    padding: var(--space-2xl, 64px) 0;
+    padding: var(--ilmn-spacing-2xl, 68px) 0;
   }
 }
 
 /* Contact CTA section */
 main > .section.contact-cta {
-  background-color: light-dark(#f5f2ed, var(--color-obsidian));
+  background-color: light-dark(#f4f2f0, var(--color-obsidian));
   margin: 0;
-  padding: 80px 0;
+  padding: 110px 0;
   text-align: center;
 }
 
 main > .section.contact-cta h2 { /* stylelint-disable-line no-descending-specificity */
-  font-size: clamp(2rem, 4vw, 2.75rem);
-  font-weight: 300;
+  font-family: var(--ilmn-font-family, inter, sans-serif);
+  font-size: clamp(2rem, 5vw, 3.3rem);
+  font-weight: var(--ilmn-font-weight-light, 300);
   margin-bottom: var(--space-m);
-  color: light-dark(var(--color-gray-700), var(--color-gray-200));
+  color: var(--ilmn-color-heading, #1f1d1a);
 }
 
 main > .section.contact-cta p {
   max-width: 680px;
   margin-inline: auto;
-  color: light-dark(var(--color-gray-600), var(--color-gray-300));
+  font-family: var(--ilmn-font-family, inter, sans-serif);
+  color: var(--ilmn-color-body, #4c4a48);
+}
+
+main > .section.contact-cta p picture img {
+  width: 64px;
+  height: 64px;
+  margin-bottom: var(--space-m);
 }
 
 main > .section.contact-cta .button-container {
   display: inline-block;
-  margin: var(--space-s) var(--space-xs);
+  margin: var(--space-m) var(--space-xs);
 }
 
 main > .section.contact-cta a.button:any-link {
-  border-radius: 24px;
-  padding: 12px 28px;
-  font-size: 1rem;
-  font-weight: 500;
+  border-radius: 100px;
+  padding: 10px 26px;
+  font-size: 1.1rem;
+  font-weight: var(--ilmn-font-weight-semibold, 600);
+  font-family: var(--ilmn-font-family, inter, sans-serif);
+  text-transform: none;
+  letter-spacing: 0;
 }
 
 main > .section.contact-cta a.button.primary:any-link {
-  background: linear-gradient(135deg, #5b4fc4, #7c3aed);
+  background: linear-gradient(8.62deg, rgb(34 93 230) 10%, rgb(166 100 253));
   border-color: transparent;
   color: #fff;
 }
 
+/* Alert section style */
+main > .section.alert {
+  padding: var(--ilmn-spacing-xl, 42px) 0 0;
+}
+
+main > .section.alert > .default-content-wrapper {
+  border: 1px solid var(--ilmn-border-separator, #ebebeb);
+  border-radius: var(--ilmn-radius-sm, 10px);
+  padding: var(--ilmn-spacing-lg, 26px) var(--ilmn-spacing-xl, 42px);
+  display: flex;
+  align-items: flex-start;
+  gap: var(--ilmn-spacing-md, 16px);
+}
+
+main > .section.alert > .default-content-wrapper::before {
+  content: '';
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  margin-top: 2px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 48 48' fill='none'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M22 42C33.0457 42 42 33.0457 42 22C42 10.9543 33.0457 2 22 2C10.9543 2 2 10.9543 2 22C2 33.0457 10.9543 42 22 42ZM44 22C44 34.1503 34.1503 44 22 44C9.84974 44 0 34.1503 0 22C0 9.84974 9.84974 0 22 0C34.1503 0 44 9.84974 44 22Z' fill='%23ADABAD'/%3E%3Cpath d='M22 8.5C20.3431 8.5 19 9.84315 19 11.5C19 13.1569 20.3431 14.5 22 14.5C23.6569 14.5 25 13.1569 25 11.5C25 9.84315 23.6569 8.5 22 8.5Z' fill='%23ADABAD'/%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M22 19.5C21.4477 19.5 21 19.9477 21 20.5V34C21 34.5523 21.4477 35 22 35C22.5523 35 23 34.5523 23 34V20.5C23 19.9477 22.5523 19.5 22 19.5Z' fill='%23ADABAD'/%3E%3C/svg%3E");
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+main > .section.alert > .default-content-wrapper p {
+  margin: 0;
+  font-family: var(--ilmn-font-family);
+  font-size: var(--body-font-size-m);
+  color: var(--ilmn-color-body);
+  line-height: 1.5;
+}
+
+main > .section.alert > .default-content-wrapper a {
+  color: var(--ilmn-color-cta-primary);
+  text-decoration: none;
+  font-weight: var(--ilmn-font-weight-semibold);
+}
+
+main > .section.alert > .default-content-wrapper a:hover { /* stylelint-disable-line no-descending-specificity */
+  text-decoration: underline;
+}
+
 main > .section.contact-cta a.button.primary:any-link:hover {
-  background: linear-gradient(135deg, #4a3fb3, #6b2dd6);
+  background: linear-gradient(8.62deg, rgb(28 78 194) 10%, rgb(140 84 214));
 }
 
 main > .section.contact-cta a.button:not(.primary):any-link {
@@ -729,6 +838,12 @@ main > .section.divider.center {
     text-align: center;
 }
 
+/* section-metadata style=separated: adds spacing between default content and the block below */
+main > .section.separated > .default-content-wrapper + div {
+  margin-top: var(--space-xl, 42px);
+  padding-top: var(--space-xl, 42px);
+}
+
 /* section-metadata or block style: spacer utilities – add to section metadata or block styles for readability gaps */
 .spacer-top-s { margin-top: var(--space-s); }
 .spacer-top-m { margin-top: var(--space-m); }
@@ -749,7 +864,7 @@ main > .section.gradient * {
   color: var(--color-parchment);
 }
 
-main > .section.gradient a:any-link {
+main > .section.gradient a:any-link { /* stylelint-disable-line no-descending-specificity */
   color: var(--color-parchment);
   text-decoration-color: rgb(255 255 255 / 40%);
 }
@@ -788,4 +903,13 @@ main > .section.ink * {
   background: var(--gradient-brand);
   background-clip: text;
   color: transparent;
+}
+
+/* Illumina body text sizing for default section content */
+main > .section > .default-content-wrapper > p:not(.button-container) {
+  font-family: var(--ilmn-font-family, inter, sans-serif);
+  font-size: 1.1rem;
+  font-weight: var(--ilmn-font-weight-regular, 400);
+  line-height: 1.5;
+  color: var(--ilmn-color-body, #4c4a48);
 }

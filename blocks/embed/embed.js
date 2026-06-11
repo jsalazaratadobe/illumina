@@ -91,6 +91,45 @@ const loadEmbed = (block, link, autoplay, fixedHeight) => {
   block.classList.add('embed-is-loaded');
 };
 
+function initScrollScale(block) {
+  const section = block.closest('.section');
+  const heading = section?.querySelector('h2, h3');
+  if (!heading) return;
+
+  heading.classList.add('embed-scroll-heading');
+
+  const wrapper = document.createElement('div');
+  wrapper.className = 'embed-scroll-wrapper';
+  block.parentNode.insertBefore(wrapper, block);
+  wrapper.appendChild(heading);
+  wrapper.appendChild(block);
+
+  const update = () => {
+    const wrapperRect = wrapper.getBoundingClientRect();
+    const viewH = window.innerHeight;
+    const totalScroll = wrapperRect.height - viewH;
+    const scrolled = Math.min(Math.max(-wrapperRect.top / totalScroll, 0), 1);
+
+    const headingFadeIn = Math.min(scrolled * 8, 1);
+    const videoAppear = 0.35;
+    const videoProgress = Math.min(Math.max(
+      (scrolled - videoAppear) / (0.7 - videoAppear), 0,
+    ), 1);
+    const headingFadeOut = videoProgress > 0.3 ? 1 - ((videoProgress - 0.3) / 0.5) : 1;
+
+    heading.style.opacity = headingFadeIn * Math.max(headingFadeOut, 0);
+
+    block.style.opacity = videoProgress > 0 ? 1 : 0;
+    const scale = 0.4 + videoProgress * 0.6;
+    const radius = Math.round(20 * (1 - videoProgress));
+    block.style.transform = `scale(${scale})`;
+    block.style.borderRadius = `${radius}px`;
+  };
+
+  window.addEventListener('scroll', update, { passive: true });
+  update();
+}
+
 export default function decorate(block) {
   const placeholder = block.querySelector('picture');
   const link = block.querySelector('a').href;
@@ -118,5 +157,9 @@ export default function decorate(block) {
       }
     });
     observer.observe(block);
+  }
+
+  if (block.classList.contains('scroll-scale')) {
+    initScrollScale(block);
   }
 }

@@ -81,4 +81,43 @@
   .hero-banner .columns > div > div:last-child {
     flex: 0 0 45%;
   }
+
+  /* stylelint-disable-next-line no-descending-specificity -- header variant is independent */
+  .columns.header > div {
+    gap: var(--ilmn-spacing-xl, 42px);
+    align-items: start;
+  }
+
+  .columns.header > div > div:first-child {
+    flex: 0 0 35%;
+  }
+
+  .columns.header > div > div:first-child h2 {
+    font-family: var(--ilmn-font-family, inter, sans-serif);
+    font-size: clamp(2rem, 4vw, 3.3rem);
+    font-weight: var(--ilmn-font-weight-light, 300);
+    line-height: 1.2;
+    color: var(--ilmn-color-heading, #1f1d1a);
+    letter-spacing: -0.02em;
+    border-left: none;
+    padding-left: 0;
+    margin: 0;
+  }
+
+  .columns.header > div > div:first-child h2::before {
+    display: none;
+  }
+
+  .columns.header > div > div:last-child {
+    flex: 1;
+  }
+
+  .columns.header > div > div:last-child p {
+    font-family: var(--ilmn-font-family, inter, sans-serif);
+    font-size: 1rem;
+    font-weight: var(--ilmn-font-weight-regular, 400);
+    line-height: 1.5;
+    color: var(--ilmn-color-body, #4c4a48);
+    margin-block-start: 0;
+  }
 }
