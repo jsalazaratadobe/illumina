@@ -1,6 +1,6 @@
 {
-  "previewOrg": "jsalazaratadobe",
-  "previewSite": "illumina",
   "type": "da",
-  "contentHostUrl": "https://content.da.live/jsalazaratadobe/illumina/"
+  "contentHostUrl": "https://content.da.live/jsalazaratadobe/illumina/",
+  "previewOrg": "jsalazaratadobe",
+  "previewSite": "illumina"
 }
