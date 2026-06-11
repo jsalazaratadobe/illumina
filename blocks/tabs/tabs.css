@@ -256,3 +256,312 @@ main .section .tabs {
     font-size: var(--heading-font-size-m);
   }
 }
+
+/* ==========================================================================
+   Inline tabs (Illumina solutions style)
+   ========================================================================== */
+
+/* Reset break-out for inline tabs inside a normal section */
+main .section .tabs.block,
+main .section.tabs .tabs.block {
+  width: 100%;
+  max-width: none;
+  margin-inline: 0;
+}
+
+.tabs.block > .tabs-list {
+  display: flex;
+  align-items: stretch;
+  justify-content: flex-start;
+  gap: 40px;
+  margin: var(--space-l, 24px) 0;
+  padding: 0;
+  border-bottom: 2px solid #a5a5a3;
+  overflow-x: auto;
+  max-width: none;
+}
+
+.tabs.block > .tabs-list button {
+  appearance: none;
+  background: none;
+  border: none;
+  border-bottom: 3px solid transparent;
+  font-family: var(--ilmn-font-family, inter, sans-serif);
+  font-size: 1.5rem;
+  font-weight: var(--ilmn-font-weight-light, 300);
+  color: var(--ilmn-color-heading, #1f1d1a);
+  padding: 10px 2px 14px;
+  margin: 0;
+  cursor: pointer;
+  white-space: nowrap;
+  opacity: 1;
+  text-transform: none;
+  letter-spacing: 0;
+  transition: border-color 0.3s, font-weight 0.3s;
+}
+
+/* stylelint-disable-next-line no-descending-specificity -- inline variant overrides base active state */
+.tabs.block > .tabs-list button.is-active,
+.tabs.block > .tabs-list button[aria-selected='true'] {
+  font-weight: var(--ilmn-font-weight-semibold, 600);
+  border-bottom-color: var(--ilmn-color-cta-primary, #4e60ee);
+  color: var(--ilmn-color-heading, #1f1d1a);
+  -webkit-text-fill-color: var(--ilmn-color-heading, #1f1d1a);
+  opacity: 1;
+}
+
+.tabs.block > .tabs-list button:hover:not(.is-active) {
+  border-bottom-color: #a5a5a3;
+  opacity: 1;
+  color: var(--ilmn-color-heading, #1f1d1a);
+}
+
+.tabs.block > .tabs-content {
+  margin-top: var(--space-xl, 42px);
+  padding-bottom: 0;
+}
+
+.tabs.block > .tabs-content > .tab[aria-hidden='true'] {
+  display: none;
+}
+
+.tabs.block > .tabs-content > .tab[aria-hidden='false'] {
+  display: block;
+}
+
+/* Tab panel content: 3-column grid by h3 sections */
+.tabs.block > .tabs-content > .tab h3 {
+  font-family: var(--ilmn-font-family, inter, sans-serif);
+  font-size: 1.5rem;
+  font-weight: var(--ilmn-font-weight-light, 300);
+  color: var(--ilmn-color-heading, #1f1d1a);
+  margin: 0 0 12px;
+  line-height: 1.5;
+}
+
+.tabs.block > .tabs-content > .tab p {
+  font-family: var(--ilmn-font-family, inter, sans-serif);
+  font-size: 1.1rem;
+  font-weight: var(--ilmn-font-weight-regular, 400);
+  color: var(--ilmn-color-body, #4c4a48);
+  line-height: 1.5;
+  margin: 0 0 12px;
+  text-align: left;
+  opacity: 1;
+}
+
+.tabs.block > .tabs-content > .tab a {
+  font-weight: var(--ilmn-font-weight-semibold, 600);
+  color: var(--ilmn-color-heading, #1f1d1a);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.tabs.block > .tabs-content > .tab a:hover {
+  color: var(--ilmn-color-cta-primary, #4e60ee);
+}
+
+.tabs.block > .tabs-content > .tab a.button {
+  background: none;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  font-size: inherit;
+  font-weight: var(--ilmn-font-weight-semibold, 600);
+  color: var(--ilmn-color-heading, #1f1d1a);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-transform: none;
+  letter-spacing: 0;
+  box-shadow: none;
+}
+
+.tabs.block > .tabs-content > .tab .button-container {
+  margin: 0;
+}
+
+/* Process variant: 3-column grid inside tab panels */
+.tabs.block.process {
+  display: block;
+}
+
+.tabs.block.process .process-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-xl, 42px);
+}
+
+.tabs.block.process .process-step-icon {
+  width: 48px;
+  height: 48px;
+  display: block;
+  margin-bottom: 12px;
+}
+
+.tabs.block.process .process-column h3 {
+  font-family: var(--ilmn-font-family, inter, sans-serif);
+  font-size: 1.5rem;
+  font-weight: var(--ilmn-font-weight-light, 300);
+  color: var(--ilmn-color-heading, #1f1d1a);
+  margin: 0 0 16px;
+  line-height: 1.5;
+}
+
+.tabs.block.process .process-column p {
+  font-family: var(--ilmn-font-family, inter, sans-serif);
+  font-size: 1.1rem;
+  font-weight: var(--ilmn-font-weight-regular, 400);
+  color: var(--ilmn-color-body, #4c4a48);
+  line-height: 1.5;
+  margin: 0 0 16px;
+}
+
+/* stylelint-disable-next-line no-descending-specificity -- process variant overrides base tab link */
+.tabs.block.process .process-column a {
+  font-weight: var(--ilmn-font-weight-semibold, 600);
+  color: var(--ilmn-color-heading, #1f1d1a);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.tabs.block.process .process-column a:hover {
+  color: var(--ilmn-color-cta-primary, #4e60ee);
+}
+
+.tabs.block.process .process-column .button-container {
+  margin: 0;
+}
+
+.tabs.block.process .process-column a.button {
+  background: none;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  font-size: inherit;
+  font-weight: var(--ilmn-font-weight-semibold, 600);
+  color: var(--ilmn-color-heading, #1f1d1a);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-transform: none;
+  letter-spacing: 0;
+  box-shadow: none;
+}
+
+/* Insights cards within tab panel */
+.tabs.block.process .tab-insights {
+  margin-top: var(--space-2xl, 48px);
+  padding-top: var(--space-xl, 42px);
+}
+
+.tabs.block.process .tab-insights h4 {
+  font-family: var(--ilmn-font-family, inter, sans-serif);
+  font-size: 1.72rem;
+  font-weight: var(--ilmn-font-weight-light, 300);
+  color: var(--ilmn-color-heading, #1f1d1a);
+  margin: 0 0 24px;
+}
+
+.tabs.block.process .tab-insights .insight-card {
+  border: 2px solid #f4f2f0;
+  border-radius: 16px;
+  padding-bottom: 20px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: box-shadow 0.35s ease, background-color 0.35s ease;
+}
+
+.tabs.block.process .tab-insights .insight-card:hover {
+  box-shadow: 0 20px 40px rgb(49 45 50 / 20%);
+  background: #fff;
+}
+
+.tabs.block.process .tab-insights .insight-card picture {
+  display: block;
+  margin-bottom: 16px;
+}
+
+.tabs.block.process .tab-insights .insight-card picture img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  aspect-ratio: 16 / 10;
+  border-radius: 16px 16px 0 0;
+}
+
+.tabs.block.process .tab-insights .insight-card > p:has(picture) {
+  margin: 0;
+  padding: 0;
+}
+
+/* stylelint-disable-next-line no-descending-specificity -- general p after specific p:has(picture) */
+.tabs.block.process .tab-insights .insight-card p {
+  font-family: var(--ilmn-font-family, inter, sans-serif);
+  font-size: 1rem;
+  color: var(--ilmn-color-body, #4c4a48);
+  line-height: 1.5;
+  margin: 0 0 8px;
+  padding-inline: 20px;
+  white-space: normal;
+  overflow-wrap: break-word;
+}
+
+.tabs.block.process .tab-insights .insight-card p.button-container {
+  display: block;
+}
+
+.tabs.block.process .tab-insights .insight-card p.button-container a.button {
+  white-space: normal;
+  display: inline;
+  background: none;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  box-shadow: none;
+  text-transform: none;
+  letter-spacing: 0;
+  font-family: var(--ilmn-font-family, inter, sans-serif);
+  font-size: 1.38rem;
+  font-weight: var(--ilmn-font-weight-regular, 400);
+  color: var(--ilmn-color-heading, #1f1d1a);
+  text-decoration: none;
+  line-height: 1.4;
+}
+
+.tabs.block.process .tab-insights .insight-card p.button-container a.button:hover {
+  background: none;
+  text-decoration: underline;
+}
+
+.tabs.block.process .tab-insights .insight-card strong a {
+  font-family: var(--ilmn-font-family, inter, sans-serif);
+  font-size: 1.38rem;
+  font-weight: var(--ilmn-font-weight-regular, 400);
+  color: var(--ilmn-color-heading, #1f1d1a);
+  text-decoration: none;
+  line-height: 1.4;
+  overflow-wrap: break-word;
+}
+
+.tabs.block.process .tab-insights .insight-card strong a:hover {
+  text-decoration: underline;
+}
+
+@media (width >= 900px) {
+  .tabs.block > .tabs-list button {
+    font-size: 1.72rem;
+  }
+
+  .tabs.block.process .process-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .tabs.block.process .tab-insights {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 42px;
+  }
+
+  .tabs.block.process .tab-insights h4 {
+    grid-column: 1 / -1;
+  }
+}

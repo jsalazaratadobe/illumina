@@ -19,6 +19,18 @@ main .teaser > div {
   padding: var(--space-l) var(--content-padding-inline);
 }
 
+/* Decorative workflow icon (matches source spotlight block) */
+main .section:not(.login-teaser-image) .teaser > div::before {
+  content: '';
+  flex: 0 0 79px;
+  width: 79px;
+  height: 96px;
+  background-image: url('/icons/workflow-finder.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+
 main .teaser h3 {
   font-size: clamp(1.25rem, 2.5vw, 1.5rem);
   margin: 0 0 var(--space-xs);

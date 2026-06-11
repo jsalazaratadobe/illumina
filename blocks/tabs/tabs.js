@@ -146,7 +146,162 @@ function buildTabsFromSections(tabSections) {
   tabsContainer.append(tabsUI);
 }
 
+function buildTabSwitching(tabList, tabContent) {
+  tabList.querySelectorAll('[role="tab"]').forEach((button) => {
+    button.addEventListener('click', () => {
+      tabList.querySelectorAll('[role="tab"]').forEach((btn) => {
+        btn.setAttribute('aria-selected', 'false');
+        btn.classList.remove('is-active');
+      });
+      tabContent.querySelectorAll('[role="tabpanel"]').forEach((p) => {
+        p.setAttribute('aria-hidden', 'true');
+      });
+      button.setAttribute('aria-selected', 'true');
+      button.classList.add('is-active');
+      const panelId = button.getAttribute('aria-controls');
+      const panel = tabContent.querySelector(`#${panelId}`);
+      if (panel) panel.setAttribute('aria-hidden', 'false');
+    });
+  });
+}
+
+function splitByHeadings(container) {
+  const columns = [];
+  let current = null;
+  [...container.children].forEach((el) => {
+    if (el.tagName === 'H3') {
+      current = document.createElement('div');
+      current.className = 'process-column';
+      current.append(el);
+      columns.push(current);
+    } else if (current) {
+      current.append(el);
+    }
+  });
+  return columns;
+}
+
+function decorateInline(block) {
+  const isProcess = block.classList.contains('process') || block.classList.contains('(process)');
+  if (isProcess) block.classList.add('process');
+  const rows = [...block.children];
+  if (!rows.length) return;
+
+  const tabList = document.createElement('div');
+  tabList.className = 'tabs-list';
+  tabList.setAttribute('role', 'tablist');
+
+  const tabContent = document.createElement('div');
+  tabContent.className = 'tabs-content';
+
+  rows.forEach((row, idx) => {
+    const cols = [...row.children];
+    const titleCol = cols[0];
+    const contentCol = cols[1];
+    const title = titleCol?.textContent?.trim() || `Tab ${idx + 1}`;
+    const id = toClassName(title);
+
+    const button = document.createElement('button');
+    button.className = 'tabs-tab';
+    button.type = 'button';
+    button.role = 'tab';
+    button.setAttribute('aria-selected', idx === 0 ? 'true' : 'false');
+    button.setAttribute('aria-controls', `panel-${id}`);
+    if (idx === 0) button.classList.add('is-active');
+    button.textContent = title;
+
+    const panel = document.createElement('div');
+    panel.className = 'tab';
+    panel.id = `panel-${id}`;
+    panel.role = 'tabpanel';
+    panel.setAttribute('aria-labelledby', button.id);
+    panel.setAttribute('aria-hidden', idx === 0 ? 'false' : 'true');
+    if (contentCol) panel.append(...contentCol.children);
+
+    if (isProcess) {
+      const hr = panel.querySelector('hr');
+      let afterContent = null;
+      if (hr) {
+        afterContent = document.createElement('div');
+        afterContent.className = 'tab-insights';
+        let sibling = hr.nextElementSibling;
+        while (sibling) {
+          const next = sibling.nextElementSibling;
+          afterContent.append(sibling);
+          sibling = next;
+        }
+        hr.remove();
+      }
+
+      const columns = splitByHeadings(panel);
+      if (columns.length > 1) {
+        const grid = document.createElement('div');
+        grid.className = 'process-grid';
+        columns.forEach((col, colIdx) => {
+          const icon = document.createElement('img');
+          icon.src = `/icons/workflow-${colIdx + 1}.svg`;
+          icon.alt = `Step ${colIdx + 1}`;
+          icon.className = 'process-step-icon';
+          icon.width = 48;
+          icon.height = 48;
+          col.prepend(icon);
+          grid.append(col);
+        });
+        panel.replaceChildren(grid);
+      }
+
+      if (afterContent) {
+        const cards = [];
+        let currentCard = null;
+        [...afterContent.children].forEach((el) => {
+          if (el.tagName === 'H4') return;
+          const hasPicture = el.querySelector('picture');
+          const hasStrongLink = el.querySelector('strong a');
+          if (hasPicture || hasStrongLink) {
+            if (hasPicture) {
+              currentCard = document.createElement('div');
+              currentCard.className = 'insight-card';
+              currentCard.append(el);
+              cards.push(currentCard);
+            } else if (hasStrongLink && currentCard) {
+              currentCard.append(el);
+            } else if (hasStrongLink) {
+              currentCard = document.createElement('div');
+              currentCard.className = 'insight-card';
+              currentCard.append(el);
+              cards.push(currentCard);
+            }
+          } else if (currentCard) {
+            currentCard.append(el);
+          }
+        });
+        const heading = afterContent.querySelector('h4');
+        afterContent.replaceChildren();
+        if (heading) afterContent.append(heading);
+        cards.forEach((card) => afterContent.append(card));
+        panel.append(afterContent);
+      }
+    }
+
+    tabList.append(button);
+    tabContent.append(panel);
+  });
+
+  block.replaceChildren(tabList, tabContent);
+  buildTabSwitching(tabList, tabContent);
+}
+
 export default function decorate(block) {
+  const rows = [...block.children];
+  const isInline = rows.length > 0 && rows[0].children.length === 2
+    && rows[0].children[0].querySelector('p')
+    && !rows[0].closest('[data-tab-id]');
+
+  if (isInline) {
+    decorateInline(block);
+    return;
+  }
+
   const currSection = block.closest('.section');
   if (!currSection) return;
 
