@@ -36,7 +36,10 @@ function isFragmentRef(el) {
 
 function getFragmentPath(el) {
   const a = el.querySelector(':scope > a');
-  return a?.getAttribute('href') || '';
+  const href = a?.getAttribute('href') || '';
+  // Authored fragment links may carry a `/content` prefix that exists in the
+  // author env but not on the published site; strip it so the fetch resolves.
+  return href.replace(/^\/content(?=\/)/, '');
 }
 
 async function loadNavFragment(path) {
@@ -57,7 +60,18 @@ function decorateMega(li) {
   const sub = li.querySelector(':scope > ul');
   if (!link || !sub) return;
 
-  const isMega = link.hash === '#mega' || sub.querySelector('picture, img');
+  // Mega when explicitly flagged (#mega), when the submenu has an inline image,
+  // or when it follows the category pattern: bare <li> headings (no link/image)
+  // and/or promo fragment references that supply the offer card.
+  const subItems = [...sub.children].filter((c) => c.tagName === 'LI');
+  const hasCategoryHeading = subItems.some(
+    (c) => !c.querySelector('a, picture, img') && c.textContent.trim(),
+  );
+  const hasFragmentRef = subItems.some(isFragmentRef);
+  const isMega = link.hash === '#mega'
+    || sub.querySelector('picture, img')
+    || hasCategoryHeading
+    || hasFragmentRef;
   if (link.hash === '#mega') link.href = link.href.replace(/#mega$/i, '');
 
   if (!isMega) return;
