@@ -19,7 +19,7 @@ const THEME_KEY = 'demo-theme';
 
 function getNavPath() {
   const meta = getMetadata('nav');
-  return (meta ? new URL(meta, location).pathname : null) || '/content/nav';
+  return (meta ? new URL(meta, location).pathname : null) || '/nav';
 }
 
 function collapseAll(nav) {
