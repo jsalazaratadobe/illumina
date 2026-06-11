@@ -1110,11 +1110,11 @@ header nav .nav-tools .nav-language-menu a:focus-visible {
 
   header nav .nav-sections .default-content-wrapper > ul > li.nav-drop-mega > ul.nav-mega-panel > .nav-mega-inner {
     display: grid;
-    grid-template-columns: 280px 1fr 260px;
+    grid-template-columns: 280px 1fr 280px;
     min-width: 992px;
     max-width: 1140px;
     margin: 0 auto;
-    min-height: 320px;
+    min-height: 300px;
   }
 
   header nav .nav-sections .default-content-wrapper > ul > li.nav-drop-mega > ul.nav-mega-panel .nav-mega-sidebar {
@@ -1162,23 +1162,19 @@ header nav .nav-tools .nav-language-menu a:focus-visible {
     background: #fff;
     position: absolute;
     inset: 0;
-    animation: nav-fade-in 0.4s ease 0.3s both;
-  }
-
-  header nav .nav-sections .default-content-wrapper > ul > li.nav-drop-mega > ul.nav-mega-panel .nav-mega-inner.nav-mega-revealed .nav-mega-cat-panel {
-    animation: nav-fade-in 0.3s ease;
   }
 
   header nav .nav-sections .default-content-wrapper > ul > li.nav-drop-mega > ul.nav-mega-panel .nav-mega-cat-panel.active {
     display: block;
     position: relative;
     min-height: 100%;
+    animation: nav-slide-in 0.35s var(--ease-out-smooth, ease) both;
   }
 
   @keyframes nav-slide-in {
     from {
       opacity: 0;
-      transform: translateX(-100%);
+      transform: translateX(-24px);
     }
 
     to {
@@ -1248,10 +1244,20 @@ header nav .nav-tools .nav-language-menu a:focus-visible {
     color: inherit;
   }
 
+  /* promo CTA link (e.g. "See timeline") */
+  header nav .nav-sections .default-content-wrapper > ul > li.nav-drop-mega > ul.nav-mega-panel .nav-mega-promo p:last-child a {
+    font-family: var(--ilmn-font-family, inter, sans-serif);
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--ilmn-color-cta-primary, #4e60ee);
+  }
+
   header nav .nav-sections .default-content-wrapper > ul > li.nav-drop-mega > ul.nav-mega-panel .nav-mega-promo img {
     display: block;
     width: 100%;
-    aspect-ratio: 4 / 3;
+    height: auto;
+    aspect-ratio: 3 / 2;
+    max-height: 200px;
     object-fit: cover;
     border-radius: 8px;
     margin-bottom: 12px;
@@ -1259,14 +1265,22 @@ header nav .nav-tools .nav-language-menu a:focus-visible {
 
   header nav .nav-sections .default-content-wrapper > ul > li.nav-drop-mega > ul.nav-mega-panel .nav-mega-promo p {
     margin: 0 0 4px;
-    font-size: 0.85rem;
-    color: #4c4a48;
-    line-height: 1.4;
+    font-family: var(--ilmn-font-family, inter, sans-serif);
+    font-size: 14px;
+    font-weight: 400;
+    color: #666;
+    line-height: 1.5;
     white-space: normal;
     overflow-wrap: break-word;
   }
 
   header nav .nav-sections .default-content-wrapper > ul > li.nav-drop-mega > ul.nav-mega-panel .nav-mega-promo h5 {
+    font-family: var(--ilmn-font-family, inter, sans-serif);
+    font-size: 16px;
+    font-weight: 400;
+    color: #666;
+    margin: 0 0 12px;
+    line-height: 1.3;
     white-space: normal;
     overflow-wrap: break-word;
   }

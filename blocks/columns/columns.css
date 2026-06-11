@@ -22,6 +22,9 @@
 }
 
 .columns > div > div :is(h2, h3) {
+  font-family: var(--ilmn-font-family, inter, sans-serif);
+  font-weight: var(--ilmn-font-weight-light, 300);
+  color: var(--ilmn-color-heading, #1f1d1a);
   letter-spacing: -0.01em;
 }
 
@@ -31,20 +34,25 @@
 }
 
 .columns > div > div a.button:any-link {
-  background: none;
+  background-color: transparent;
+  background-image: var(--ilmn-gradient-cta, linear-gradient(8.62deg, #225de6 10%, #a664fd));
+  background-size: 100% 2px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
   border: none;
   color: light-dark(var(--color-ink), var(--color-parchment));
-  padding: 0;
+  padding: 0 0 2px;
   font-weight: 600;
-  text-decoration: underline;
-  text-underline-offset: 3px;
+  text-transform: none;
+  letter-spacing: normal;
+  text-decoration: none;
   box-shadow: none;
   font-size: inherit;
 }
 
 .columns > div > div a.button:any-link:hover {
-  background: none;
-  color: light-dark(var(--color-gray-600), var(--color-gray-200));
+  color: light-dark(var(--color-ink), var(--color-parchment));
+  text-decoration: none;
 }
 
 /* Hero banner: text first on mobile, vertically centered */

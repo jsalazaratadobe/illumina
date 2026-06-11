@@ -1,13 +1,11 @@
 /* Teaser / Spotlight block */
 
 main .teaser {
-  background-color: light-dark(#f5f2ed, var(--color-card-dark));
-  background-image: linear-gradient(180deg, #f5f2ed 0%, #ebe5df 100%);
-  border: 1px solid light-dark(var(--color-gray-200), rgb(245 242 237 / 10%));
+  background-color: light-dark(#f4f1ee, var(--color-card-dark));
+  background-image: linear-gradient(360deg, #ededf5, #ede7e4 30%, #eee8e4 56%, #f4f1ee);
   border-radius: 16px;
   font-size: var(--body-font-size-m);
   color: light-dark(var(--color-ink), var(--color-parchment));
-  box-shadow: 0 4px 16px rgb(0 0 0 / 5%);
 }
 
 main .teaser > div {
@@ -32,9 +30,11 @@ main .section:not(.login-teaser-image) .teaser > div::before {
 }
 
 main .teaser h3 {
-  font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+  font-family: var(--ilmn-font-family, inter, sans-serif);
+  font-size: clamp(1.5rem, 2.5vw, 2.1rem);
   margin: 0 0 var(--space-xs);
-  font-weight: 600;
+  font-weight: var(--ilmn-font-weight-light, 300);
+  color: var(--ilmn-color-heading, #1f1d1a);
 }
 
 main .teaser > div > div > p:not(.button-container) {
@@ -47,17 +47,23 @@ main .teaser > div > div .button-container {
   margin: var(--space-m) 0 0;
 }
 
-main .teaser .button.primary:any-link {
-  background: linear-gradient(135deg, #5b4fc4, #7c3aed);
-  border-color: transparent;
+/* Gradient pill CTA (matches source spotlight button) */
+main .teaser .button:any-link {
+  background: var(--ilmn-gradient-cta, linear-gradient(8.62deg, #225de6 10%, #a664fd));
+  border: none;
   color: #fff;
-  border-radius: 24px;
-  padding: 12px 28px;
-  font-weight: 500;
+  border-radius: 100px;
+  padding: 10px 26px;
+  font-family: var(--ilmn-font-family, inter, sans-serif);
+  font-size: 1.05rem;
+  font-weight: 600;
+  text-transform: none;
+  letter-spacing: normal;
+  white-space: nowrap;
 }
 
-main .teaser .button.primary:any-link:hover {
-  background: linear-gradient(135deg, #4a3fb3, #6b2dd6);
+main .teaser .button:any-link:hover {
+  background: var(--ilmn-gradient-cta-hover, linear-gradient(8.62deg, #0045e6 10%, #8a33fd));
 }
 
 @media (width >= 900px) {
@@ -65,14 +71,32 @@ main .teaser .button.primary:any-link:hover {
     flex-direction: row;
     align-items: center;
     text-align: left;
-    padding: var(--space-xl) var(--space-2xl, 64px);
+    gap: 42px;
+    padding: 42px;
   }
 
+  /* text in column 1 (stacked), gradient button centered in column 2 (right) */
   main .teaser > div > div {
     flex: 1;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    column-gap: 42px;
+  }
+
+  main .teaser > div > div h3 {
+    grid-column: 1;
+    margin: 0 0 var(--space-xs);
+  }
+
+  main .teaser > div > div p:not(.button-container) {
+    grid-column: 1;
   }
 
   main .teaser > div > div .button-container {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    align-self: center;
     margin: 0;
   }
 }
