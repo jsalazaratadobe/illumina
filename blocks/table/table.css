@@ -138,6 +138,19 @@
   max-width: 180px;
 }
 
+/* mobile: shrink images and tighten cells so the scrollable spec table is compact */
+@media (width <= 599px) {
+  .table table img,
+  .table table thead img {
+    max-width: 96px;
+  }
+
+  .table table th,
+  .table table td {
+    padding: 12px 10px;
+  }
+}
+
 /* Center non-first columns for spec values */
 .table table td:not(:first-child),
 .table table th:not(:first-child) {
@@ -232,13 +245,18 @@
 
 .table-container > .default-content-wrapper a.button:any-link {
   all: unset;
-  color: var(--link-color);
+  color: var(--ilmn-color-heading, #1f1d1a);
   text-decoration: none;
   cursor: pointer;
   font-weight: 600;
   font-size: inherit;
   display: inline;
   white-space: normal;
+  background-image: var(--ilmn-gradient-cta, linear-gradient(8.62deg, #225de6 10%, #a664fd));
+  background-size: 100% 2px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  padding-bottom: 2px;
 }
 
 .table-container > .default-content-wrapper a.button:any-link::after {
@@ -246,12 +264,6 @@
   display: inline-block;
   margin-inline-start: 0.3em;
   transition: transform 0.2s;
-}
-
-.table-container > .default-content-wrapper a.button:any-link:hover {
-  text-decoration: underline;
-  background: none;
-  border: none;
 }
 
 .table-container > .default-content-wrapper a.button:any-link:hover::after {

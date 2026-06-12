@@ -753,7 +753,10 @@ main > .section.contact-cta .button-container {
 }
 
 /* Default contact button: transparent fill + gradient outline (gradient text on inner strong) */
+
+/* First button (Speak to a specialist): transparent fill, gradient text + rounded gradient ring */
 main > .section.contact-cta a.button:any-link {
+  position: relative;
   border: 2px solid transparent;
   border-radius: 100px;
   padding: 10px 26px;
@@ -762,35 +765,53 @@ main > .section.contact-cta a.button:any-link {
   font-family: var(--ilmn-font-family, inter, sans-serif);
   text-transform: none;
   letter-spacing: 0;
-  background:
-    linear-gradient(light-dark(#f4f2f0, var(--color-obsidian)), light-dark(#f4f2f0, var(--color-obsidian))) padding-box,
-    var(--ilmn-gradient-cta) border-box;
+  background: transparent;
+  border-color: transparent;
   color: transparent;
+  -webkit-text-fill-color: transparent;
 }
 
 main > .section.contact-cta a.button:any-link::after {
   display: none;
 }
 
+main > .section.contact-cta a.button:any-link::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 2px;
+  background: var(--ilmn-gradient-cta);
+
+  /* stylelint-disable-next-line property-no-vendor-prefix */
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+
+  /* stylelint-disable-next-line property-no-vendor-prefix */
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
 main > .section.contact-cta a.button:any-link strong {
-  background: var(--ilmn-gradient-cta);
+  background-image: var(--ilmn-gradient-cta);
+
+  /* stylelint-disable-next-line property-no-vendor-prefix */
+  -webkit-background-clip: text;
   background-clip: text;
+  color: transparent;
   -webkit-text-fill-color: transparent;
-  font-weight: inherit;
 }
 
-/* Second (right) button: solid gradient fill, white text */
-main > .section.contact-cta .button-container + .button-container a.button:any-link {
-  border: 2px solid transparent;
+/* Second button (Request a demo): solid gradient fill, white text */
+main > .section.contact-cta p.button-container ~ p.button-container a.button:any-link {
   background: var(--ilmn-gradient-cta);
+  border-color: transparent;
   color: #fff;
   -webkit-text-fill-color: #fff;
 }
 
-main > .section.contact-cta .button-container + .button-container a.button:any-link strong {
-  background: none;
-  -webkit-text-fill-color: #fff;
-  color: #fff;
+main > .section.contact-cta p.button-container ~ p.button-container a.button:any-link::before {
+  display: none;
 }
 
 /* Alert section style */

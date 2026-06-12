@@ -182,8 +182,9 @@ header .nav-brand {
   grid-area: brand;
   display: flex;
   align-items: center;
-  justify-content: center;
-  justify-self: stretch;
+  justify-content: flex-start;
+  justify-self: start;
+  margin-left: var(--space-s);
   min-width: 0;
   font-family: var(--font-family-serif);
   font-size: var(--nav-brand-size);
@@ -766,13 +767,13 @@ header nav .nav-tools .nav-language-menu a:focus-visible {
     }
   
     header nav .nav-brand :is(img, svg) {
-      width: min(138px, 37vw);
-      height: 36px;
+      width: min(96px, 28vw);
+      height: 24px;
     }
-  
+
     header nav .nav-brand .icon.icon-logo {
-      width: 100px;
-      height: 40px;
+      width: 96px;
+      height: 28px;
     }
   
     header nav .nav-tools {
@@ -811,12 +812,12 @@ header nav .nav-tools .nav-language-menu a:focus-visible {
     }
   
     header nav .nav-brand :is(img, svg) {
-      width: min(120px, 40vw);
-      height: 38px;
+      width: min(84px, 30vw);
+      height: 22px;
     }
-  
+
     header nav .nav-tools .nav-search-input {
-      width: 82px;
+      width: 96px;
       padding: var(--space-xs) 34px var(--space-xs) var(--space-s);
     }
   }
@@ -1350,6 +1351,42 @@ header nav .nav-tools .nav-language-menu a:focus-visible {
 @media (width <= 899px) {
   header nav .nav-tools .nav-auth-desktop {
     display: none;
+  }
+
+  /* hide Contact Us in the tools row on mobile (keep only the search bar) */
+  header nav .nav-tools .default-content-wrapper > p.button-container {
+    display: none;
+  }
+
+  /* tools row: just the search icon, aligned right next to logo/hamburger */
+  header nav .nav-tools .default-content-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  /* collapse the search field into a standalone icon button on mobile */
+  header nav .nav-tools .nav-search-form {
+    border: 0;
+    padding: 0;
+    background: transparent;
+  }
+
+  header nav .nav-tools .nav-search-input {
+    display: none;
+  }
+
+  header nav .nav-tools .nav-search-submit {
+    position: static;
+    transform: none;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 20px 20px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%234c4a48' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'/%3E%3C/svg%3E");
   }
 
   header nav .nav-sections .default-content-wrapper > ul > li.nav-auth-mobile-item {
