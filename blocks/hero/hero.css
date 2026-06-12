@@ -20,6 +20,9 @@
 .hero > div:first-child {
   position: relative;
   line-height: 0;
+
+  /* mobile: keep the image off the screen edges */
+  padding: var(--content-padding-inline);
 }
 
 .hero .hero-img-light,
@@ -145,9 +148,9 @@
   color: transparent;
 }
 
-/* Body text — hidden on mobile */
+/* Body text — visible on mobile */
 .hero p:not(.button-container, .hero-tagline) {
-  display: none;
+  display: block;
   max-width: 550px;
   margin: 0;
   font-family: var(--ilmn-font-family);
@@ -214,6 +217,7 @@
     line-height: 0;
     max-width: 650px;
     margin: 0 auto;
+    padding: 0;
   }
 
   .hero > div:last-child {
