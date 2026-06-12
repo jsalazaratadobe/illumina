@@ -100,6 +100,23 @@ main .section .tabs {
   outline-offset: -2px;
 }
 
+/* mobile: let tabs wrap and tighten so they don't get cut off */
+@media (width <= 599px) {
+  .tabs .tabs-list {
+    flex-wrap: wrap;
+    justify-content: center;
+    overflow-x: visible;
+    gap: var(--space-xs);
+  }
+
+  .tabs .tabs-list button {
+    padding: 12px 10px;
+    letter-spacing: 1px;
+    white-space: normal;
+    text-align: center;
+  }
+}
+
 /* Tab panels */
 .tabs .tabs-content {
   margin-top: var(--space-m);
@@ -362,18 +379,25 @@ main .section.tabs .tabs.block {
 }
 
 .tabs.block > .tabs-content > .tab a.button {
-  background: none;
   border: none;
   border-radius: 0;
-  padding: 0;
+  padding: 0 0 2px;
   font-size: inherit;
   font-weight: var(--ilmn-font-weight-semibold, 600);
   color: var(--ilmn-color-heading, #1f1d1a);
-  text-decoration: underline;
-  text-underline-offset: 3px;
+  text-decoration: none;
   text-transform: none;
   letter-spacing: 0;
   box-shadow: none;
+  background-color: transparent;
+  background-image: var(--ilmn-gradient-cta, linear-gradient(8.62deg, #225de6 10%, #a664fd));
+  background-size: 100% 2px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+}
+
+.tabs.block > .tabs-content > .tab a.button::after {
+  display: none;
 }
 
 .tabs.block > .tabs-content > .tab .button-container {
@@ -420,8 +444,12 @@ main .section.tabs .tabs.block {
 .tabs.block.process .process-column a {
   font-weight: var(--ilmn-font-weight-semibold, 600);
   color: var(--ilmn-color-heading, #1f1d1a);
-  text-decoration: underline;
-  text-underline-offset: 3px;
+  text-decoration: none;
+  padding-bottom: 2px;
+  background-image: var(--ilmn-gradient-cta, linear-gradient(8.62deg, #225de6 10%, #a664fd));
+  background-size: 100% 2px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
 }
 
 .tabs.block.process .process-column a:hover {
@@ -433,18 +461,25 @@ main .section.tabs .tabs.block {
 }
 
 .tabs.block.process .process-column a.button {
-  background: none;
   border: none;
   border-radius: 0;
-  padding: 0;
+  padding: 0 0 2px;
   font-size: inherit;
   font-weight: var(--ilmn-font-weight-semibold, 600);
   color: var(--ilmn-color-heading, #1f1d1a);
-  text-decoration: underline;
-  text-underline-offset: 3px;
+  text-decoration: none;
   text-transform: none;
   letter-spacing: 0;
   box-shadow: none;
+  background-color: transparent;
+  background-image: var(--ilmn-gradient-cta, linear-gradient(8.62deg, #225de6 10%, #a664fd));
+  background-size: 100% 2px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+}
+
+.tabs.block.process .process-column a.button::after {
+  display: none;
 }
 
 /* Insights cards within tab panel */
@@ -512,10 +547,9 @@ main .section.tabs .tabs.block {
 .tabs.block.process .tab-insights .insight-card p.button-container a.button {
   white-space: normal;
   display: inline;
-  background: none;
   border: none;
   border-radius: 0;
-  padding: 0;
+  padding: 0 0 2px;
   box-shadow: none;
   text-transform: none;
   letter-spacing: 0;
@@ -525,11 +559,15 @@ main .section.tabs .tabs.block {
   color: var(--ilmn-color-heading, #1f1d1a);
   text-decoration: none;
   line-height: 1.4;
+  background-color: transparent;
+  background-image: var(--ilmn-gradient-cta, linear-gradient(8.62deg, #225de6 10%, #a664fd));
+  background-size: 100% 2px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
 }
 
-.tabs.block.process .tab-insights .insight-card p.button-container a.button:hover {
-  background: none;
-  text-decoration: underline;
+.tabs.block.process .tab-insights .insight-card p.button-container a.button::after {
+  display: none;
 }
 
 .tabs.block.process .tab-insights .insight-card strong a {
@@ -540,10 +578,11 @@ main .section.tabs .tabs.block {
   text-decoration: none;
   line-height: 1.4;
   overflow-wrap: break-word;
-}
-
-.tabs.block.process .tab-insights .insight-card strong a:hover {
-  text-decoration: underline;
+  padding-bottom: 2px;
+  background-image: var(--ilmn-gradient-cta, linear-gradient(8.62deg, #225de6 10%, #a664fd));
+  background-size: 100% 2px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
 }
 
 @media (width >= 900px) {
