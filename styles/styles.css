@@ -765,8 +765,12 @@ main > .section.contact-cta a.button:any-link {
   font-family: var(--ilmn-font-family, inter, sans-serif);
   text-transform: none;
   letter-spacing: 0;
-  background: transparent;
   border-color: transparent;
+  background-image: var(--ilmn-gradient-cta);
+
+  /* stylelint-disable-next-line property-no-vendor-prefix */
+  -webkit-background-clip: text;
+  background-clip: text;
   color: transparent;
   -webkit-text-fill-color: transparent;
 }

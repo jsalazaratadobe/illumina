@@ -48,6 +48,9 @@
   text-decoration: none;
   box-shadow: none;
   font-size: inherit;
+  display: inline;
+  white-space: normal;
+  overflow-wrap: break-word;
 }
 
 .columns > div > div a.button:any-link:hover {
